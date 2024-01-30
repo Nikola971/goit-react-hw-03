@@ -3,6 +3,7 @@ import React from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { nanoid } from 'nanoid';
+import css from './ContactForm.module.css'
 
 export const ContactForm = ({ onAddContact }) => {
   const formik = useFormik({
@@ -33,6 +34,7 @@ export const ContactForm = ({ onAddContact }) => {
   });
 
   return (
+    <div className={css.contactform}>
     <form onSubmit={formik.handleSubmit}>
       <div>
         <label htmlFor="name">Name:</label>
@@ -63,7 +65,8 @@ export const ContactForm = ({ onAddContact }) => {
         )}
       </div>
       <button type="submit">Add Contact</button>
-    </form>
+      </form>
+      </div>
   );
 };
 

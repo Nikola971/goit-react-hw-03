@@ -3,6 +3,7 @@ import { ContactList } from './components/ContactList/ContactList';
 import contactsData from './components/Contacts/contacts.json';
 import { SearchBar } from './components/SearchBox/SearchBox';
 import { ContactForm } from './components/ContactForm/Componentform';
+import css from './assets/app.module.css'
 
 function App() {
   const [contacts, setContacts] = useState([]);
@@ -41,7 +42,7 @@ function App() {
 
   return (
     <div>
-      <h1>Phonebook</h1>
+      <h1 className={css.main}>Phonebook</h1>
       <SearchBar searchTerm={searchTerm} onSearchChange={handleSearchChange} />
       <ContactForm onAddContact={addContact} />
       <ContactList contacts={filteredContacts} onDeleteContact={deleteContact} />
