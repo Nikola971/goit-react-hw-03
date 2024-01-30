@@ -1,21 +1,27 @@
-
 import React, { useState, useEffect } from 'react';
-import { ContactList } from './assets/Components/ContactList/ContactList';
-import contactsData from './assets/Components/Contacts/contacts.json';
-import { SearchBar } from './assets/Components/SearchBox/SearchBox';
-import { ContactForm } from './assets/Components/ContactForm/Componentform';
-function App() {
-  const [contacts, setContacts] = useState(() => {
-    const storedContacts = localStorage.getItem('contacts');
-    return storedContacts ? JSON.parse(storedContacts) : contactsData;
-  });
+import { ContactList } from './components/ContactList/ContactList';
+import contactsData from './components/Contacts/contacts.json';
+import { SearchBar } from './components/SearchBox/SearchBox';
+import { ContactForm } from './components/ContactForm/Componentform';
 
+function App() {
+  const [contacts, setContacts] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
+
+  // Зчитати контакти з localStorage при завантаженні сторінки
+  useEffect(() => {
+    const storedContacts = JSON.parse(localStorage.getItem('contacts')) || [];
+    setContacts(storedContacts);
+  }, []);
+
+  // Зберегти контакти в localStorage при їх зміні
+  useEffect(() => {
+    localStorage.setItem('contacts', JSON.stringify(contacts));
+  }, [contacts]);
 
   const deleteContact = (contactId) => {
     setContacts((prevContacts) => {
       const updatedContacts = prevContacts.filter((contact) => contact.id !== contactId);
-      localStorage.setItem('contacts', JSON.stringify(updatedContacts));
       return updatedContacts;
     });
   };
@@ -27,7 +33,6 @@ function App() {
   const addContact = (newContact) => {
     setContacts((prevContacts) => {
       const updatedContacts = [...prevContacts, newContact];
-      localStorage.setItem('contacts', JSON.stringify(updatedContacts));
       return updatedContacts;
     });
   };
@@ -36,12 +41,6 @@ function App() {
     contact.name.toLowerCase().includes(searchTerm)
   );
 
-  useEffect(() => {
-    const storedContacts = localStorage.getItem('contacts');
-    if (storedContacts) {
-      setContacts(JSON.parse(storedContacts));
-    }
-  }, []);
   return (
     <div>
       <h1>Phonebook</h1>
