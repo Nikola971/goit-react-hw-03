@@ -8,13 +8,11 @@ function App() {
   const [contacts, setContacts] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
 
-  // Зчитати контакти з localStorage при завантаженні сторінки
   useEffect(() => {
     const storedContacts = JSON.parse(localStorage.getItem('contacts')) || [];
     setContacts(storedContacts);
   }, []);
 
-  // Зберегти контакти в localStorage при їх зміні
   useEffect(() => {
     localStorage.setItem('contacts', JSON.stringify(contacts));
   }, [contacts]);
